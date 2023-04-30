@@ -35,7 +35,7 @@ The pretrained model is only used for inference stage. Onnx and TensorRT models 
 The steps to use the code follow the following steps, and it would be helpful if you are familiar with TensorRT and Makefile.
 
 * Download the source code in this repository, and then put it to Jetson Xavier NX.
-* Modify the Makefile, which is in Jetson-Xavier-NX/fp16&fp32(int8)/Makefile. In line7 to line 9, you need to modify it to your path.
+* Modify the Makefile, which is in Jetson-Xavier-NX/fp16&fp32(int8)/Makefile. In line7 to line 9, you need to modify it to your paths.
 >Copy files from the system to the following paths, but of course, if you are familiar with TensorRT and Makefile, you are not bound to do so.
 
 >cuda_home in line 7: some bin, lib, and include files of TensorRT, CUDA, and protobuf
