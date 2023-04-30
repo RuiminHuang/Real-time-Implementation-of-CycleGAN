@@ -16,11 +16,11 @@ Download from [Datasets](https://drive.google.com/file/d/1GN-mLgHciyRknhO1Awllno
 
 The composition and number of image pairs in datasets:
 
-DATASETS    |TRAIN | TEST | TOTAL
----- | ---- | ---- | ---- | ----
-LIR2RGB  | 2880 | 1440 | 4320
-RGBN2RGB | 3419 | 1709 | 5218
-PIR2RGB  | 2027 | 337 | 2364
+|DATASETS|TRAIN|TEST|TOTAL|
+|--------|-----|----|-----|
+|LIR2RGB  | 2880 | 1440 | 4320|
+|RGBN2RGB | 3419 | 1709 | 5218|
+|PIR2RGB  | 2027 | 337  | 2364|
 
 
 
