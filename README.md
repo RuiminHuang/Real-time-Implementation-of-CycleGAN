@@ -10,7 +10,7 @@ This repository provides some files for real-time implementation of CycleGAN on 
 
 ### 0.Datasets
 
-Download from [Datasets](https://drive.google.com/file/d/1GN-mLgHciyRknhO1Awllno4dimGJ8K43/view?usp=sharing).
+Download from [Google Drive](https://drive.google.com/file/d/1GN-mLgHciyRknhO1Awllno4dimGJ8K43/view?usp=sharing).
 
 ![Datasets-img](images/Datasets.jpg)
 
@@ -26,7 +26,7 @@ The composition and number of image pairs in datasets:
 
 ### 1.Pretrained model
 
-Download from [Pretrained model](https://drive.google.com/file/d/12aKrFH1kMfHVoLTCFdDxpgDuGhypADwm/view?usp=sharing).
+Download from [Google Drive](https://drive.google.com/file/d/12aKrFH1kMfHVoLTCFdDxpgDuGhypADwm/view?usp=sharing).
 
 The pretrained model is only used for inference stage. Onnx and TensorRT models are provided. Please note that the TensorRT model can only be used on the Jetson Xavier NX hardware platform.
 
@@ -53,5 +53,5 @@ If you encounter any problems, please feel free to post them to GitHub issues co
 
 ### 3.Results
 
-Inference results are also available on [Results](https://drive.google.com/file/d/1-18u5aw2AD4kjFe6Qt-2I1CtIsM_orTV/view?usp=sharing).
+Inference results are also available on [Google Drive](https://drive.google.com/file/d/1-18u5aw2AD4kjFe6Qt-2I1CtIsM_orTV/view?usp=sharing).
 
