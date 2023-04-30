@@ -1,6 +1,6 @@
 ## Edge device-based Real-time Implementation of CycleGAN for the Colorization of Infrared Video
 
-This repository provides some material for real-time implementation of CycleGAN on Jetson Xavier NX with TensorRT.
+This repository provides some files for real-time implementation of CycleGAN on Jetson Xavier NX with TensorRT.
 
 * Datasets
 * Pretrained model
