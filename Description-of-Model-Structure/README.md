@@ -47,6 +47,6 @@ By exporting the networks as onnx files and opening them with netron app, some d
 
 The differences between Sub_Network1 and Sub_Network2, as well as between Sub_Network2 and Sub_Network3, are easy to recognize. The differences are marked in the figure with black rectangles.
 
-There is an image below. If you don't see the image, please check your network or go directly to the images folder under the current path to download "all_model.jpg".
+> There is an image below. If you don't see the image, please check your network or go directly to the images folder under the current path to download "all_model.jpg".
 
 ![all_model](images/all_model.jpg)
