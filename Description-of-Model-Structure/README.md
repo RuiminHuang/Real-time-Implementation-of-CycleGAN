@@ -1,6 +1,6 @@
 ## Descriptions of model structure
 
-### 0. How to generate network with different structures
+### 0. How to generate networks with different structures
 
 #### Requirements
 >Pytorch 1.4 or higher, only Pytorch is required, no other dependencies are needed.
