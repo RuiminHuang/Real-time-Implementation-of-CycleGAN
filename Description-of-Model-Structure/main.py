@@ -21,6 +21,30 @@ class SeparableConv2d(nn.Module):
         return self.conv(x)
 
 
+class ResnetBlock(nn.Module):
+
+    def __init__(self, dim, norm_layer, dropout_rate):
+        super(ResnetBlock, self).__init__()
+
+        conv_block = [nn.ReflectionPad2d(1)]
+        conv_block += [
+            nn.Conv2d(dim, dim, kernel_size=3, padding=0, bias=True),
+            norm_layer(dim),
+            nn.ReLU(True)
+        ]
+        conv_block += [nn.Dropout(dropout_rate)]
+        conv_block += [nn.ReflectionPad2d(1)]
+        conv_block += [
+            nn.Conv2d(dim, dim, kernel_size=3, padding=0, bias=True),
+            norm_layer(dim)
+        ]
+
+        self.model = nn.Sequential(*conv_block)
+
+    def forward(self, x):
+        return x + self.model(x)
+
+
 class MyResnetBlock(nn.Module):
     def __init__(self, ic, oc, norm_layer, dropout_rate):
         super(MyResnetBlock, self).__init__()
@@ -44,6 +68,55 @@ class MyResnetBlock(nn.Module):
 
     def forward(self, x):
         return x + self.model(x)
+
+
+class CycleGANGenerator(nn.Module):
+
+    def __init__(self, input_nc=3, output_nc=3, ngf=64, norm_layer=nn.InstanceNorm2d,
+                 dropout_rate=0, n_blocks=9):
+        super(CycleGANGenerator, self).__init__()
+
+        model = [nn.ReflectionPad2d(3),
+                 nn.Conv2d(input_nc, ngf, kernel_size=7, padding=0, bias=True),
+                 norm_layer(ngf),
+                 nn.ReLU(True)]
+
+        n_downsampling = 2
+
+        # add downsampling layers
+        for i in range(n_downsampling):
+            mult = 2 ** i
+            model += [nn.Conv2d(ngf * mult, ngf * mult * 2,
+                                kernel_size=3, stride=2,
+                                padding=1,
+                                bias=True),
+                      norm_layer(ngf * mult * 2),
+                      nn.ReLU(True)]
+
+        mult = 2 ** n_downsampling
+
+        # add ResNet blocks
+        for i in range(n_blocks):
+            model += [ResnetBlock(ngf * mult, norm_layer=norm_layer, dropout_rate=dropout_rate)]
+
+        # add upsampling layers
+        for i in range(n_downsampling):
+            mult = 2 ** (n_downsampling - i)
+            model += [nn.ConvTranspose2d(ngf * mult, int(ngf * mult / 2),
+                                         kernel_size=3, stride=2,
+                                         padding=1, output_padding=1,
+                                         bias=True),
+                      norm_layer(int(ngf * mult / 2)),
+                      nn.ReLU(True)]
+
+        model += [nn.ReflectionPad2d(3)]
+        model += [nn.Conv2d(ngf, output_nc, kernel_size=7, padding=0)]
+        model += [nn.Tanh()]
+
+        self.model = nn.Sequential(*model)
+
+    def forward(self, input):
+        return self.model(input)
 
 
 class MyCycleGANGenerator(nn.Module):
@@ -89,9 +162,11 @@ class MyCycleGANGenerator(nn.Module):
                       norm_layer(int(oc * mult / 2)),
                       nn.ReLU(True)]
             ic = oc
+
         model += [nn.ReflectionPad2d(3)]
         model += [nn.Conv2d(ic, output_nc, kernel_size=7, padding=0)]
         model += [nn.Tanh()]
+
         self.model = nn.Sequential(*model)
 
     def forward(self, input):
@@ -104,9 +179,15 @@ if __name__ == '__main__':
     dummy_input = torch.randn((1, 3, 256, 256), dtype=torch.float)
 
     # Teacher network, which is original CycleGAN generator
-    Teacher_Network = MyCycleGANGenerator(config=[64, 64, 64, 64, 64, 64, 64, 64])
+    Teacher_Network = CycleGANGenerator(ngf=64)
     print(Teacher_Network)
     torch.onnx.export(Teacher_Network, dummy_input, "Teacher_Network.onnx", verbose=False,
+                      input_names=["input"], output_names=["output"])
+
+    # Convolution in Resnet is replaced with a separable convolution in original CycleGAN generator
+    Teacher_Network_Separable_Conv = MyCycleGANGenerator(config=[64, 64, 64, 64, 64, 64, 64, 64])
+    print(Teacher_Network_Separable_Conv)
+    torch.onnx.export(Teacher_Network_Separable_Conv, dummy_input, "Teacher_Network_Separable_Conv.onnx", verbose=False,
                       input_names=["input"], output_names=["output"])
 
     # Student network
