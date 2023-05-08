@@ -10,18 +10,25 @@
 
 #### Descriptions
 
-In main.py, 1 teacher network, 1 student network, and 3 sub-networks of student networks are defined. 
+In main.py, 1 teacher network, 1 temporary network, 1 student network, and 3 sub-networks of student networks are defined. 
 
 We use config to define number of channels in each layer of the hidden layer.
 
-* For a teacher network, or original CycleGAN generators,  the config is set to [64, 64, 64, 64, 64, 64, 64, 64, 64], which is relatively computationally intensive.
+* A teacher network, or original CycleGAN generator, which is very computationally intensive.
 
   ```python
   # Teacher network, which is original CycleGAN generator
-  Teacher_Network = MyCycleGANGenerator(config=[64, 64, 64, 64, 64, 64, 64, 64])
+  Teacher_Network = CycleGANGenerator(ngf=64)
   ```
 
-* For a student network,  the config is set to [32, 32, 32, 32, 32, 32, 32, 32, 32], which is less computationally intensive.
+* A temporary network (a teacher network, but replace conv with separable conv in the Resnet block), the config is set to [64, 64, 64, 64, 64, 64, 64, 64, 64], which is relatively computationally intensive.
+
+  ```python
+  # Teacher_Network* (replace conv with separable conv in resnet block)
+  Teacher_Network_Separable_Conv = MyCycleGANGenerator(config=[64, 64, 64, 64, 64, 64, 64, 64])
+  ```
+
+* A student network,  the config is set to [32, 32, 32, 32, 32, 32, 32, 32, 32], which is less computationally intensive.
 
   ```python
   # Student network
@@ -47,6 +54,6 @@ By exporting the networks as onnx files and opening them with netron app, some d
 
 The differences between Sub_Network1 and Sub_Network2, as well as between Sub_Network2 and Sub_Network3, are easy to recognize. The differences are marked in the figure with black rectangles.
 
-> There is an image below. If you don't see the image, please check your network or go directly to the images folder under the current path to download "all_model.jpg".
+> There is an image below. If you don't get the image, please check your network or go directly to the images folder under the current path to download "all_model.jpg".
 
 ![all_model](images/all_model.jpg)
