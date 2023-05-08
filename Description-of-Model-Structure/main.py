@@ -184,7 +184,7 @@ if __name__ == '__main__':
     torch.onnx.export(Teacher_Network, dummy_input, "Teacher_Network.onnx", verbose=False,
                       input_names=["input"], output_names=["output"])
 
-    # Convolution in Resnet is replaced with a separable convolution in original CycleGAN generator
+    # Teacher_Network* (replace conv with separable conv in resnet block)
     Teacher_Network_Separable_Conv = MyCycleGANGenerator(config=[64, 64, 64, 64, 64, 64, 64, 64])
     print(Teacher_Network_Separable_Conv)
     torch.onnx.export(Teacher_Network_Separable_Conv, dummy_input, "Teacher_Network_Separable_Conv.onnx", verbose=False,
