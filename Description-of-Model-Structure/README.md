@@ -35,7 +35,7 @@ We use config to define number of channels in each layer of the hidden layer.
   Student_Network = MyCycleGANGenerator(config=[32, 32, 32, 32, 32, 32, 32, 32])
   ```
 
-* For a sub-net of the student network, the config is [n1, n2, n3, n4, n5, n6, n8]. To balance computational complexity and hardware parallelism, n1-n8 can be selected as 16, 24, or 32, so there are 6561 (3 to the 8th power) sub-nets. Obviously, the sub-nets is also less computationally intensive than the student network.
+* For a sub-net of the student network, the config is [n1, n2, n3, n4, n5, n6, n8]. Considering computational complexity and hardware parallelism, n1-n8 can be selected as 16, 24, or 32, so there are 6561 (3 to the 8th power) sub-nets. Obviously, the sub-nets is also less computationally intensive than the student network.
 
   ```python
   # Sub_Network1
